@@ -1,0 +1,130 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: rgb(217, 205, 230);
+    font-family: "McLaren", cursive;
+    min-height: 100vh;
+    min-width: none;
+}
+
+/* Header */
+
+header {
+    background-color: #410374;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+}
+
+#Library, #Library:hover{
+    font-family: 'Space Mono', monospace;
+    color: #fff;
+    font-weight: 200;
+    text-decoration: none;
+}
+
+.homeButton {
+    margin: 0.8rem;
+}
+
+.hide {
+    display: none;
+}
+/* Footer */
+
+
+
+
+/* Book Form */
+
+.formContainer {
+    padding: 5%;
+    text-align: center;
+    margin: 0 auto;
+    position: relative;
+}
+
+.input-group{
+    display: flex;
+    justify-content: center;
+    margin: 25px 0;
+}
+
+.input-group span,input{
+    border: 1px black solid;
+}
+
+#Alert1,#Alert2,#countAlert{
+    visibility: hidden;
+    
+}
+
+#Alert1{
+    margin-top: 5%;
+}
+#bookAddAlert{
+    margin: 10px;
+    visibility: hidden;
+}
+
+#Alert3{
+    visibility: hidden;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+}
+#Alert{
+    margin-top: 5%;
+}
+/* Search Bar */
+
+.search-bar{
+    text-align: center;
+    height: 200px;
+}
+
+.search-bar input{
+    border: #410374 solid;
+    color: #410374 !important;
+}
+
+.search{
+    display: inline;
+    position: relative;
+    top: 80px;
+}
+
+button{
+    background-color: #410374 !important;
+    color: white !important;
+    border: #eee solid !important;
+}
+
+.bookName{
+    font-family: 'Cormorant SC', serif;
+    font-weight: 700 !important;
+}
+
+.bookName,.authorName{
+    color: black;
+}
+
+.bookName{
+    line-height: 1.5rem;
+}
+
+.noBook{
+    color: #410374;
+    margin-bottom: 18rem;
+    text-align: center;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
