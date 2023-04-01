@@ -103,23 +103,23 @@ signRouter.post('/transaction', authorization, async(req, res)=>{
         }
         
         // req will contain each detail from frontend only even the updated currentCustomerBalance
-        var transaction = new Transaction({
-            customerId: req.body.customerId,
-            collectorId: req.body.collectorId,
-            transactionAmount: req.body.transactionAmount,
-            currentCustomerBalance: req.body.currentCustomerBalance
-        });
+
 
         //transaction session
         const client = new MongoClient(process.env.DBurl);
         try {
             await client.connect();
             var respondmsg = {}; 
+            customer.currentBalance += Number(req.body.transactionAmount);
+            var transaction = new Transaction({
+                customerId: req.body.customerId,
+                collectorId: req.body.collectorId,
+                transactionAmount: req.body.transactionAmount,
+                currentCustomerBalance: customer.currentBalance
+            });
             await transaction.save().then(data =>{respondmsg["transaction"] = data}).catch(err =>{console.log(err);});
-            customer.currentBalance += req.body.transactionAmount;
-            console.log(customer);
             await customer.save().then(data =>{respondmsg["customer"] = data}).catch(err => {console.log(err)});
-
+            console.log(respondmsg);
             res.send(respondmsg);
         } catch (err){
             console.log(err);

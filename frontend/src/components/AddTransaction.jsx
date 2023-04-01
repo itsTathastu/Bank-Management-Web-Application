@@ -3,17 +3,16 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Header from "../non-components/Header";
 
-const details = {
+const updatedDetails = {
     customerId: "",
     collectorId: "",
     transactionAmount: 0,
-    currentCustomerBalance:0
+    currentCustomerBalance: 0
 };
 
 function AddTransaction() {
 
     let nav = useNavigate();
-    const [finalBalance, setFinalBalance] = useState(0);
     const [contact, setContact] = useState({
         customerId: "",
         collectorId: "",
@@ -32,30 +31,20 @@ function AddTransaction() {
 
     async function onSubmit(event) {
         event.preventDefault();
-        details.customerId= contact.customerId;
-        details.transactionAmount=contact.transactionAmount;
-        details.collectorId = localStorage.getItem("collectorId");
+        updatedDetails.customerId = contact.customerId;
+        updatedDetails.transactionAmount = contact.transactionAmount;
+        updatedDetails.collectorId = localStorage.getItem("collectorId");
 
-        const customerData = await axios.get("http://localhost:2000/user/profile/" + details.customerId);
-        // details.currentCustomerBalance=Number(customerData.data.currentBalance)+Number(details.transactionAmount);
-        console.log(typeof(customerData.data.currentBalance));
-        console.log(typeof(details.transactionAmount));
-        setFinalBalance(finalBalance + customerData.data.currentBalance + Number(details.transactionAmount));
-        console.log(finalBalance);
-        details.currentCustomerBalance = finalBalance;
-        // console.log(details);
-        // console.log(customerData);
-        
-        
-        
-        
-        
-        
-        // await axios
-        //     .post("http://localhost:2000/collector/transaction", details,
-        //     {headers:{'authToken': localStorage.getItem('token')}})
-        //     .then(res => console.log(res.data))
-        //     .catch(err => console.log(err)) 
+        const customerData = await axios.get("http://localhost:2000/user/profile/" + updatedDetails.customerId);
+
+        updatedDetails.currentCustomerBalance = customerData.data.currentBalance + Number(updatedDetails.transactionAmount);
+        console.log(updatedDetails);
+
+        await axios
+            .post("http://localhost:2000/collector/transaction", updatedDetails,
+            {headers:{'authToken': localStorage.getItem('token')}})
+            .then(res => console.log(res.data))
+            .catch(err => console.log(err)) 
 
 
         const message = document.getElementById("bookAddAlert");
@@ -109,4 +98,4 @@ function AddTransaction() {
 
 export default AddTransaction;
 
-export { details };
+export { updatedDetails };

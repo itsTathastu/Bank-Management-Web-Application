@@ -6,10 +6,8 @@ function CollectorPage() {
 
     const id = localStorage.getItem("collectorId");
     const initState = [] ;
-    const [customerIdArray, setCustomerIdArray] = useState(initState) ;
     const [customerNameArray, setCustomerNameArray] = useState(initState) ;
     const [collectorData, setCollectorData] = useState(initState) ;
-    var arr = [];
 
     useEffect(() => {
         fetchData();      
@@ -23,11 +21,10 @@ function CollectorPage() {
 
         wholeData.data.customers.forEach(async ele => {
             const customerNameData = await axios.get("http://localhost:2000/user/profile/" + ele);  
-            setCustomerNameArray(prevValue => [...prevValue, customerNameData.data.name]);
+            setCustomerNameArray(prevValue => [...prevValue, customerNameData.data.customerId + " - " + customerNameData.data.name]);
         });
-        // console.log(customerNameArray);
+        console.log(customerNameArray);
         setCollectorData(wholeData.data) ;
-        setCustomerIdArray(wholeData.data.customers);
     }
 
     return (
