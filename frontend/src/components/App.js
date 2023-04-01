@@ -9,6 +9,7 @@ import Login from "./Login";
 import CollectorPage from "./CollectorPage";
 import AddUser from "./AddUser";
 import AddTransaction from "./AddTransaction";
+import CustomerPage from "./CustomerPage";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
                     <Route path="/collectorPage" name="collectorPage" element={<CollectorPage/>} />
                     <Route path="/addUser" name="addUser" element={<AddUser/>} />
                     <Route path="/addTransaction" name="addTransaction" element={<AddTransaction/>} />
+                    <Route path="/customerPage" name="customerPage" element={<CustomerPage/>} />
                 </Routes>
             </BrowserRouter>
 

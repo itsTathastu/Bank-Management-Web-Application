@@ -187,14 +187,16 @@ signRouter.get('/profile/:id', authorization, async(req, res)=>{
 });
 
 //collector transactions statement, date format is yyyy-mm-dd
-signRouter.get('/statement/:id', authorization, async(req,res) => {
+signRouter.get('/statement/:id&:startDate&:endDate', authorization, async(req,res) => {
     const id = req.params.id;
+    const startDate = req.params.startDate;
+    const endDate = req.params.endDate;
     try{
         const collector = await Collector.findOne({collectorId: id});
         if(!collector){
             return res.status(400).json({error: "invalid collectorId"});
         }
-        const transaction = await Transaction.find({collectorId: id, date : {$gte: req.body.startDate, $lte: req.body.endDate}});
+        const transaction = await Transaction.find({collectorId: id, date : {$gte: startDate, $lte: endDate}});
         res.send({transaction});
     }
     catch{

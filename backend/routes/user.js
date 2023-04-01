@@ -26,13 +26,16 @@ userRouter.get('/rdstatement', async(req, res)=>{
 });
 
 // date format is yyyy-mm-dd
-userRouter.get('/statement', async(req, res)=>{
+userRouter.get('/statement/:id&:startDate&:endDate', async(req, res)=>{
+    const id = req.params.id;
+    const startDate = req.params.startDate;
+    const endDate = req.params.endDate;
     try{
-        const user = await Customer.find({customerId: req.body.customerId});
+        const user = await Customer.find({customerId: id});
         if(!user) {
             return res.status(400).json({check : false, error : "User does not exist"}) ;
         }
-        const transaction = await Transaction.find({customerId: req.body.customerId, date : {$gte: req.body.startDate, $lte: req.body.endDate}});
+        const transaction = await Transaction.find({customerId: id, date : {$gte: startDate, $lte: endDate}});
         res.send({user, transaction});
     }
     catch{
