@@ -35,11 +35,6 @@ function AddTransaction() {
         updatedDetails.transactionAmount = contact.transactionAmount;
         updatedDetails.collectorId = localStorage.getItem("collectorId");
 
-        const customerData = await axios.get("http://localhost:2000/user/profile/" + updatedDetails.customerId);
-
-        updatedDetails.currentCustomerBalance = customerData.data.currentBalance + Number(updatedDetails.transactionAmount);
-        console.log(updatedDetails);
-
         await axios
             .post("http://localhost:2000/collector/transaction", updatedDetails,
             {headers:{'authToken': localStorage.getItem('token')}})

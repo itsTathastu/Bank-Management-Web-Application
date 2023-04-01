@@ -10,7 +10,7 @@ userRouter.get('/', (req, res)=>{
     res.send('on user side');
 });
 
-// date format is yyyy/mm/dd
+// date format is yyyy-mm-dd
 userRouter.get('/rdstatement', async(req, res)=>{
     try{
         const user = await Customer.find({customerId: req.body.customerId});
@@ -25,7 +25,7 @@ userRouter.get('/rdstatement', async(req, res)=>{
     }
 });
 
-// date format is yyyy/mm/dd
+// date format is yyyy-mm-dd
 userRouter.get('/statement', async(req, res)=>{
     try{
         const user = await Customer.find({customerId: req.body.customerId});

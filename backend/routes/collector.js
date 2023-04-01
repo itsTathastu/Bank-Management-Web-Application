@@ -119,7 +119,7 @@ signRouter.post('/transaction', authorization, async(req, res)=>{
             });
             await transaction.save().then(data =>{respondmsg["transaction"] = data}).catch(err =>{console.log(err);});
             await customer.save().then(data =>{respondmsg["customer"] = data}).catch(err => {console.log(err)});
-            console.log(respondmsg);
+            // console.log(respondmsg);
             res.send(respondmsg);
         } catch (err){
             console.log(err);
@@ -185,5 +185,22 @@ signRouter.get('/profile/:id', authorization, async(req, res)=>{
         res.send(err);
     }
 });
+
+//collector transactions statement, date format is yyyy-mm-dd
+signRouter.get('/statement/:id', authorization, async(req,res) => {
+    const id = req.params.id;
+    try{
+        const collector = await Collector.findOne({collectorId: id});
+        if(!collector){
+            return res.status(400).json({error: "invalid collectorId"});
+        }
+        const transaction = await Transaction.find({collectorId: id, date : {$gte: req.body.startDate, $lte: req.body.endDate}});
+        res.send({transaction});
+    }
+    catch{
+        res.send({message: "error"});
+    }
+});
+
 
 module.exports = signRouter;
