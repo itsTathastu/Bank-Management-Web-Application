@@ -10,6 +10,8 @@ function CustomerPage() {
         endDate: ""
     });
 
+    const [entries,setEntries] = useState({}) ;
+
     function handleChangeStatement(event) {
         const { name, value } = event.target;
 
@@ -25,20 +27,25 @@ function CustomerPage() {
     async function statementSubmit(e) {
         e.preventDefault();
 
-        console.log(statement);
-        
-
-        await axios.get('http://localhost:2000/user/statement/' + statement.custId + "&" + statement.startDate + "&" + statement.endDate)
-            .then(function (response) {
-                console.log(response.data.transaction);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-        
-        
         // console.log(statement);
+
+
+        const response = await axios.get('http://localhost:2000/user/statement/' + statement.custId + "&" + statement.startDate + "&" + statement.endDate);
+        
+        // console.log(response.data.transaction);
+        setEntries(response.data.transaction);
+
+        // await axios.get('http://localhost:2000/user/statement/' + statement.custId + "&" + statement.startDate + "&" + statement.endDate)
+        //     .then(function (response) {
+        //         console.log(response.data.transaction);
+        //         setEntries(response.data.transaction);
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     });
     }
+
+    console.log(entries);
 
     return (
         <div>
@@ -69,8 +76,15 @@ function CustomerPage() {
                         <button type="submit" class="btn btn-primary">Get Statement </button>
                     </form>
                 </div>
+                <div class="card card-body">
+                    {(!entries) && entries.map(name => (
+                        <li>
+                            {name.date}
+                            {name.collectorId}
+                        </li>
+                    ))}
+                </div>
             </div>
-
         </div>
     );
 
