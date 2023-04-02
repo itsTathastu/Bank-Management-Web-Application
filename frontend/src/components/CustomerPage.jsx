@@ -10,7 +10,7 @@ function CustomerPage() {
         endDate: ""
     });
 
-    const [entries,setEntries] = useState({}) ;
+    const [entries, setEntries] = useState({});
 
     function handleChangeStatement(event) {
         const { name, value } = event.target;
@@ -27,32 +27,18 @@ function CustomerPage() {
     async function statementSubmit(e) {
         e.preventDefault();
 
-        // console.log(statement);
-
-
         const response = await axios.get('http://localhost:2000/user/statement/' + statement.custId + "&" + statement.startDate + "&" + statement.endDate);
-        
-        // console.log(response.data.transaction);
+
         setEntries(response.data.transaction);
 
-        // await axios.get('http://localhost:2000/user/statement/' + statement.custId + "&" + statement.startDate + "&" + statement.endDate)
-        //     .then(function (response) {
-        //         console.log(response.data.transaction);
-        //         setEntries(response.data.transaction);
-        //     })
-        //     .catch(function (error) {
-        //         console.log(error);
-        //     });
     }
 
-    console.log(entries);
 
     return (
         <div>
             <Header />
             <h1>Customer Page</h1>
 
-            {/* Statement */}
             <p>
                 <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                     Statement
@@ -77,12 +63,30 @@ function CustomerPage() {
                     </form>
                 </div>
                 <div class="card card-body">
-                    {(!entries) && entries.map(name => (
-                        <li>
-                            {name.date}
-                            {name.collectorId}
-                        </li>
-                    ))}
+                    {Array.isArray(entries) && entries.length ? (
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Collector ID</th>
+                                    <th>Amount</th>
+                                    <th>Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {entries.map((entry, index) => (
+                                    <tr key={index}>
+                                        <td>{new Date(entry.date).toLocaleDateString('en-GB')}</td>
+                                        <td>{entry.collectorId}</td>
+                                        <td>{entry.transactionAmount}</td>
+                                        <td>{entry.currentCustomerBalance}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    ) : (
+                        <div>No entries</div>
+                    )}
                 </div>
             </div>
         </div>
