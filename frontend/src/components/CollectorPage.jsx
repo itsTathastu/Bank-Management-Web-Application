@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Header from "../non-components/Header";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function CollectorPage() {
+
+    const nav = useNavigate();
 
     const id = localStorage.getItem("collectorId");
     const initState = [] ;
@@ -13,6 +16,9 @@ function CollectorPage() {
         fetchData();      
     }, []);
 
+    function transactionRedirect(){
+        nav('/collectorTransactions');
+    }
 
     async function fetchData(){
         const wholeData = await axios.get("http://localhost:2000/collector/profile/" + id, 
@@ -48,8 +54,12 @@ function CollectorPage() {
                     ))}
                 </div>
             </div>
-
-            
+            {/* Collector statement */}
+            <p>
+                <button onClick={transactionRedirect} class="btn btn-primary" type="button"  >
+                    Get Statement
+                </button>
+            </p>
         </div>
     );
 }

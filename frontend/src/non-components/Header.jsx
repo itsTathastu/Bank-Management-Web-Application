@@ -46,6 +46,9 @@ function Header() {
     function profileIconClick(){
         nav("/collectorPage");
     }
+    function customerStatement(){
+        nav("/customerPage");
+    }
 
     return (
         <header>
@@ -59,10 +62,11 @@ function Header() {
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div className="homeButtons ml-auto">
+                        <button onClick={customerStatement} type="button" class="btn btn-secondary btn-lg homeButton">Customer Statement</button>
                         {localStorage.getItem("token") && <button onClick={Logout} type="button" class="btn btn-secondary btn-lg homeButton">logout</button>}
-                        {localStorage.getItem("token") && <button onClick={AddUser} type="button" class="btn btn-secondary btn-lg homeButton">Add User</button>}
+                        {localStorage.getItem("token") && <button onClick={AddUser} type="button" class="btn btn-secondary btn-lg homeButton">Add Customer</button>}
                         {localStorage.getItem("token") && <button onClick={AddTransaction} type="button" class="btn btn-secondary btn-lg homeButton">Add Transaction</button>}
-                        {!localStorage.getItem("token") && <button onClick={LoginClick} type="button" class="btn btn-secondary btn-lg homeButton">User Login</button>}
+                        {!localStorage.getItem("token") && <button onClick={LoginClick} type="button" class="btn btn-secondary btn-lg homeButton">Collector Login</button>}
                         {localStorage.getItem("token") && <button type="button" class="btn btn-secondary btn-lg homeButton" on onClick={profileIconClick}><i class="fa-solid fa-user"></i></button>}
                     </div>
                 </div>
